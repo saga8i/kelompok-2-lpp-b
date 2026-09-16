@@ -1,0 +1,115 @@
+START
+
+DECLARE 
+    Integer : count, i
+    Real    : totalBelanja, total, nilaiDiskon, hargaSetelahDiskon, uangDikasih, uangKembalian
+    Integer, Array[100] : amount
+    Real, Array[100]    : price, finalPrice
+    String, Array[100]  : item
+    Integer diskon
+END DECLARE
+
+OUTPUT "=== INPUT BARANG BELANJA ==="
+OUTPUT "(Ketik 'selesai' pada Nama barang jika sudah tidak ada barang lagi)"
+
+count = 1
+totalBelanja = 0
+
+WHILE (count > 0) DO
+    OUTPUT "=== Data Barang " + count + " ==="
+
+    // ---- input dan validasi nama barang ----
+    WHILE (count > 0) DO
+        INPUT item[count]
+        IF LCase(item[count]) = "selesai" THEN
+            BREAK
+        ELSE
+            IF Trim(item[count]) = "" THEN
+                OUTPUT "Nama barang tidak boleh kosong. Coba lagi."
+            ELSE
+                BREAK
+            END IF
+        END IF
+    END WHILE
+
+    IF LCase(item[count]) = "selesai" THEN
+        BREAK (exit main loop)
+    END IF
+
+    // ---- input dan validasi jumlah barang ----
+    WHILE (count > 0) DO
+        INPUT amount[count]
+        IF amount[count] <= 0 THEN
+            OUTPUT "Jumlah barang harus lebih dari 0. Coba lagi."
+        ELSE IF amount[count] <> Trunc(amount[count]) THEN
+            OUTPUT "Jumlah barang harus berupa bilangan bulat. Coba lagi."
+        ELSE
+            BREAK
+        END IF
+    END WHILE
+
+    // ---- input dan validasi harga barang ----
+    WHILE (count > 0) DO
+        INPUT price[count]
+        IF price[count] <= 0 THEN
+            OUTPUT "Harga barang harus lebih dari 0. Coba lagi."
+        ELSE
+            BREAK
+        END IF
+    END WHILE
+
+    // ---- hitung total barang dan diskonnya ----
+    total = amount[count] * price[count]
+
+    IF total < 50000 THEN
+        diskon = 0
+    ELSE IF total < 100000 THEN
+        diskon = 5
+    ELSE
+        diskon = 10
+    END IF
+
+    nilaiDiskon = total * diskon / 100
+    hargaSetelahDiskon = total - nilaiDiskon
+    finalPrice[count] = hargaSetelahDiskon
+    totalBelanja = totalBelanja + hargaSetelahDiskon
+
+    // ---- output item ----
+    OUTPUT "--- Hasil Barang " + count + " ---"
+    OUTPUT "Nama barang       : " + item[count]
+    OUTPUT "Harga sebelum diskon : Rp" + total
+    OUTPUT "Diskon             : " + diskon + "%"
+    OUTPUT "Harga setelah diskon: Rp" + hargaSetelahDiskon
+
+    count = count + 1
+
+END WHILE
+
+// ---- input dan validasi total belanja ----
+WHILE (count > 0) DO
+    INPUT uangDikasih
+    IF uangDikasih <= 0 THEN
+        OUTPUT "Uang yang diberikan harus lebih dari 0. Coba lagi."
+    ELSE IF uangDikasih < totalBelanja THEN
+        OUTPUT "Uang yang diberikan harus lebih dari total belanja. Coba lagi."
+    ELSE
+        BREAK
+    END IF
+END WHILE
+
+uangKembalian = uangDikasih - totalBelanja
+
+// ---- output struk ----
+OUTPUT "========== STRUK BELANJA =========="
+
+FOR i = 1 TO count - 1 DO
+    OUTPUT item[i] + " : Rp" + finalPrice[i]
+END FOR
+
+OUTPUT "-----------------------------------"
+OUTPUT "TOTAL           : Rp" + totalBelanja
+OUTPUT "UANG DIBERIKAN  : Rp" + uangDikasih
+OUTPUT "UANG KEMBALIAN  : Rp" + uangKembalian
+OUTPUT "==================================="
+
+END
