@@ -1,12 +1,11 @@
 START
 
 DECLARE 
-    Integer : count, i
+    Integer : count, i, diskon
     Real    : totalBelanja, total, nilaiDiskon, hargaSetelahDiskon, uangDikasih, uangKembalian
     Integer, Array[100] : amount
     Real, Array[100]    : price, finalPrice
     String, Array[100]  : item
-    Integer diskon
 END DECLARE
 
 OUTPUT "=== INPUT BARANG BELANJA ==="
@@ -22,7 +21,10 @@ WHILE (count > 0) DO
     WHILE (count > 0) DO
         INPUT item[count]
         IF LCase(item[count]) = "selesai" THEN
-            BREAK
+            IF count = 1 THEN
+                OUTPUT "Total item masih 0, silahkan masukkan nama barang dahulu."
+            END IF
+        END IF
         ELSE
             IF Trim(item[count]) = "" THEN
                 OUTPUT "Nama barang tidak boleh kosong. Coba lagi."
