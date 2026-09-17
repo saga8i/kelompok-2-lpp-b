@@ -20,12 +20,14 @@ WHILE (count > 0) DO
     // ---- input dan validasi nama barang ----
     WHILE (count > 0) DO
         INPUT item[count]
+        // ---- jika input item = "selesai" saat count = 1, maka akan reprompt ----
         IF LCase(item[count]) = "selesai" THEN
             IF count = 1 THEN
                 OUTPUT "Total item masih 0, silahkan masukkan nama barang dahulu."
             END IF
         END IF
         ELSE
+            // ---- cek input nama barang, jika string kosong akan reprompt ----
             IF Trim(item[count]) = "" THEN
                 OUTPUT "Nama barang tidak boleh kosong. Coba lagi."
             ELSE
@@ -34,6 +36,7 @@ WHILE (count > 0) DO
         END IF
     END WHILE
 
+    // ---- kondisi break loop while(true), jika count > 1 dan input item = "selesai" ----
     IF LCase(item[count]) = "selesai" THEN
         BREAK (exit main loop)
     END IF
@@ -60,7 +63,7 @@ WHILE (count > 0) DO
         END IF
     END WHILE
 
-    // ---- hitung total barang dan diskonnya ----
+    // ---- hitung total barang dan diskon yang ter-applied ----
     total = amount[count] * price[count]
 
     IF total < 50000 THEN
@@ -71,6 +74,7 @@ WHILE (count > 0) DO
         diskon = 10
     END IF
 
+    // ---- kalkulasi untuk output per barang ----
     nilaiDiskon = total * diskon / 100
     hargaSetelahDiskon = total - nilaiDiskon
     finalPrice[count] = hargaSetelahDiskon
@@ -87,7 +91,7 @@ WHILE (count > 0) DO
 
 END WHILE
 
-// ---- input dan validasi total belanja ----
+// ---- input dan validasi uang dikasih untuk penghitungan uang kembalian ----
 WHILE (count > 0) DO
     INPUT uangDikasih
     IF uangDikasih <= 0 THEN
