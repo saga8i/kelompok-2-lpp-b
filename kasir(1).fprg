@@ -1,0 +1,145 @@
+<?xml version="1.0"?>
+<flowgorithm fileversion="4.2">
+    <attributes>
+        <attribute name="name" value="kasir"/>
+        <attribute name="authors" value=""/>
+        <attribute name="about" value=""/>
+        <attribute name="saved" value="2026-09-17 09:15:58 AM"/>
+        <attribute name="created" value="QXN1cztTQUdBOEk7MjAyNi0wOS0xNzswNjo1NjoyOSBBTTsyMTA5"/>
+        <attribute name="edited" value="QXN1cztTQUdBOEk7MjAyNi0wOS0xNzswOToxNTo1OCBBTTszOzIyMTk="/>
+    </attributes>
+    <function name="Main" type="None" variable="">
+        <parameters/>
+        <body>
+            <declare name="count, i, diskon" type="Integer" array="False" size=""/>
+            <declare name="totalBelanja, total, nilaiDiskon, hargaSetelahDiskon, uangDikasih, uangKembalian" type="Real" array="False" size=""/>
+            <declare name="amount" type="Integer" array="True" size="100"/>
+            <declare name="price, finalPrice" type="Real" array="True" size="100"/>
+            <declare name="item" type="String" array="True" size="100"/>
+            <declare name="lanjutLoopUtama, namaValid, jumlahValid, hargaValid, uangValid" type="Boolean" array="False" size=""/>
+            <assign variable="count" expression="1"/>
+            <assign variable="totalBelanja" expression="0"/>
+            <assign variable="lanjutLoopUtama" expression="True"/>
+            <output expression="&quot;=== INPUT BARANG BELANJA ===&quot;" newline="True"/>
+            <output expression="&quot;(Ketik 'selesai' pada Nama barang jika sudah tidak ada barang lagi)&quot;" newline="True"/>
+            <while expression="lanjutLoopUtama == True">
+                <output expression="&quot;=== Data Barang &quot; &amp; count &amp; &quot; ===&quot;" newline="True"/>
+                <assign variable="namaValid" expression="False"/>
+                <while expression="namaValid == False">
+                    <output expression="&quot;Masukkan nama barang:&quot;" newline="True"/>
+                    <input variable="item[count]"/>
+                    <if expression="item[count] == &quot;selesai&quot; || item[count] == &quot;Selesai&quot;">
+                        <then>
+                            <assign variable="namaValid" expression="True"/>
+                            <assign variable="lanjutLoopUtama" expression="False"/>
+                        </then>
+                        <else>
+                            <if expression="item[count] == &quot;&quot;">
+                                <then>
+                                    <output expression="&quot;Nama barang tidak boleh kosong. Coba lagi.&quot;" newline="True"/>
+                                </then>
+                                <else>
+                                    <assign variable="namaValid" expression="True"/>
+                                </else>
+                            </if>
+                        </else>
+                    </if>
+                </while>
+                <if expression="lanjutLoopUtama == True">
+                    <then>
+                        <assign variable="jumlahValid" expression="False"/>
+                        <while expression="jumlahValid == False">
+                            <output expression="&quot;Masukkan jumlah barang:&quot;" newline="True"/>
+                            <input variable="amount[count]"/>
+                            <if expression="amount[count] &lt;= 0">
+                                <then>
+                                    <output expression="&quot;Jumlah barang harus lebih dari 0. Coba lagi.&quot;" newline="True"/>
+                                </then>
+                                <else>
+                                    <assign variable="jumlahValid" expression="True"/>
+                                </else>
+                            </if>
+                        </while>
+                        <assign variable="hargaValid" expression="False"/>
+                        <while expression="hargaValid == False">
+                            <output expression="&quot;Masukkan harga barang:&quot;" newline="True"/>
+                            <input variable="price[count]"/>
+                            <if expression="price[count] &lt;= 0">
+                                <then>
+                                    <output expression="&quot;Harga barang harus lebih dari 0. Coba lagi.&quot;" newline="True"/>
+                                </then>
+                                <else>
+                                    <assign variable="hargaValid" expression="True"/>
+                                </else>
+                            </if>
+                        </while>
+                        <assign variable="total" expression="amount[count] * price[count]"/>
+                        <if expression="total &lt; 50000">
+                            <then>
+                                <assign variable="diskon" expression="0"/>
+                            </then>
+                            <else>
+                                <if expression="total &lt; 100000">
+                                    <then>
+                                        <assign variable="diskon" expression="5"/>
+                                    </then>
+                                    <else>
+                                        <assign variable="diskon" expression="10"/>
+                                    </else>
+                                </if>
+                            </else>
+                        </if>
+                        <assign variable="nilaiDiskon" expression="total * diskon / 100"/>
+                        <assign variable="hargaSetelahDiskon" expression="total - nilaiDiskon"/>
+                        <assign variable="finalPrice[count]" expression="hargaSetelahDiskon"/>
+                        <assign variable="totalBelanja" expression="totalBelanja + hargaSetelahDiskon"/>
+                        <output expression="&quot;--- Hasil Barang &quot; &amp; count &amp; &quot; ---&quot;" newline="True"/>
+                        <output expression="&quot;Nama barang        : &quot; &amp; item[count]" newline="True"/>
+                        <output expression="&quot;Harga sebelum diskon : Rp&quot; &amp; total" newline="True"/>
+                        <output expression="&quot;Diskon             : &quot; &amp; diskon &amp; &quot;%&quot;" newline="True"/>
+                        <output expression="&quot;Harga setelah diskon: Rp&quot; &amp; hargaSetelahDiskon" newline="True"/>
+                        <assign variable="count" expression="count + 1"/>
+                    </then>
+                    <else/>
+                </if>
+            </while>
+            <if expression="count &gt; 1">
+                <then>
+                    <assign variable="uangValid" expression="False"/>
+                    <while expression="uangValid == False">
+                        <output expression="&quot;Total belanja Rp&quot; &amp; totalBelanja &amp; &quot;. Masukkan uang yang diberikan:&quot;" newline="True"/>
+                        <input variable="uangDikasih"/>
+                        <if expression="uangDikasih &lt;= 0">
+                            <then>
+                                <output expression="&quot;Uang yang diberikan harus lebih dari 0. Coba lagi.&quot;" newline="True"/>
+                            </then>
+                            <else>
+                                <if expression="uangDikasih &lt; totalBelanja">
+                                    <then>
+                                        <output expression="&quot;Uang yang diberikan kurang dari total belanja. Coba lagi.&quot;" newline="True"/>
+                                    </then>
+                                    <else>
+                                        <assign variable="uangValid" expression="True"/>
+                                    </else>
+                                </if>
+                            </else>
+                        </if>
+                    </while>
+                    <assign variable="uangKembalian" expression="uangDikasih - totalBelanja"/>
+                    <output expression="&quot;========== STRUK BELANJA ==========&quot;" newline="True"/>
+                    <for variable="i" start="1" end="count - 1" direction="inc" step="1">
+                        <output expression="item[i] &amp; &quot; : Rp&quot; &amp; finalPrice[i]" newline="True"/>
+                    </for>
+                    <output expression="&quot;-----------------------------------&quot;" newline="True"/>
+                    <output expression="&quot;TOTAL           : Rp&quot; &amp; totalBelanja" newline="True"/>
+                    <output expression="&quot;UANG DIBERIKAN  : Rp&quot; &amp; uangDikasih" newline="True"/>
+                    <output expression="&quot;UANG KEMBALIAN  : Rp&quot; &amp; uangKembalian" newline="True"/>
+                    <output expression="&quot;===================================&quot;" newline="True"/>
+                </then>
+                <else>
+                    <output expression="&quot;Total item masih kosong, reset&quot;" newline="True"/>
+                </else>
+            </if>
+        </body>
+    </function>
+</flowgorithm>
