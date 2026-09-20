@@ -23,7 +23,8 @@ WHILE (count > 0) DO
         // ---- jika input item = "selesai" saat count = 1, maka akan reprompt ----
         IF LCase(item[count]) = "selesai" THEN
             IF count = 1 THEN
-                OUTPUT "Total item masih 0, silahkan masukkan nama barang dahulu."
+                OUTPUT "Belum ada barang yang dimasukkan. Selesai, struk tidak dibuat."
+                BREAK
             END IF
         END IF
         ELSE
