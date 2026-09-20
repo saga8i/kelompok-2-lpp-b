@@ -12,8 +12,7 @@ while (true) {
         item = prompt("Masukkan nama barang: ");
         if (item.toLowerCase() === "selesai") {
             if (count === 1) {
-                console.log("Total item masih 0, silahkan masukkan nama barang dahulu.");
-                continue;
+                alert("Belum ada barang yang dimasukkan. Selesai, struk tidak dibuat.");
             }
             break;
         }
@@ -81,19 +80,20 @@ while (true) {
     count++;
 }
 
-let uangDikasih;
-while (true) {
-    uangDikasih = Number(prompt(`\nMasukkan uang yang diberikan (Total belanja = Rp${totalBelanja.toLocaleString("id-ID")}):`));
-    if (isNaN(uangDikasih)) {
-        console.log("Uang yang diberikan harus berupa angka. Coba lagi.");
-    } else if (uangDikasih <= 0) {
-        console.log("Uang yang diberikan harus lebih dari 0. Coba lagi.");
-    } else if (uangDikasih < totalBelanja) {
-      console.log("Uang yang diberikan harus lebih dari total belanja. Berikan uang yang cukup dan coba lagi.")
-    } else {
-        break;
+if (count > 1) {
+    let uangDikasih;
+    while (true) {
+        uangDikasih = Number(prompt(`\nMasukkan uang yang diberikan (Total belanja = Rp${totalBelanja.toLocaleString("id-ID")}):`));
+        if (isNaN(uangDikasih)) {
+            console.log("Uang yang diberikan harus berupa angka. Coba lagi.");
+        } else if (uangDikasih <= 0) {
+            console.log("Uang yang diberikan harus lebih dari 0. Coba lagi.");
+        } else if (uangDikasih < totalBelanja) {
+            console.log("Uang yang diberikan harus lebih dari total belanja. Berikan uang yang cukup dan coba lagi.");
+        } else {
+            break;
+        }
     }
-}
 
 let uangKembalian = uangDikasih - totalBelanja;
 
@@ -110,3 +110,4 @@ console.log(`TOTAL           : Rp${totalBelanja.toLocaleString("id-ID")}`);
 console.log(`UANG DIBERIKAN  : Rp${uangDikasih.toLocaleString("id-ID")}`);
 console.log(`UANG KEMBALIAN  : Rp${uangKembalian.toLocaleString("id-ID")}`);
 console.log("===================================");
+}
