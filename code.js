@@ -9,8 +9,8 @@ while (true) {
 
     let item;
     while (true) {
-        item = prompt("Masukkan nama barang: ");
-        if (item.toLowerCase() === "selesai") {
+        item = (prompt("Masukkan nama barang: ") ?? "").trim();
+        if (item.trim().toLowerCase() === "selesai") {
             if (count === 1) {
                 alert("Belum ada barang yang dimasukkan. Selesai, struk tidak dibuat.");
             }
@@ -23,7 +23,7 @@ while (true) {
         break;
     }
 
-    if (item.toLowerCase() === "selesai") break;
+    if (item.trim().toLowerCase() === "selesai") break;
 
     let amount;
     while (true) {
@@ -42,7 +42,7 @@ while (true) {
     let price;
     while (true) {
         price = Number(prompt("Masukkan harga satuan barang: "));
-        if (isNaN(price)) {
+        if (!Number.isFinite(price)) {
             console.log("Harga barang harus berupa angka. Coba lagi.");
         } else if (price <= 0) {
             console.log("Harga barang harus lebih dari 0. Coba lagi.");
@@ -84,7 +84,7 @@ if (count > 1) {
     let uangDikasih;
     while (true) {
         uangDikasih = Number(prompt(`\nMasukkan uang yang diberikan (Total belanja = Rp${totalBelanja.toLocaleString("id-ID")}):`));
-        if (isNaN(uangDikasih)) {
+        if (!Number.isFinite(uangDikasih)) {
             console.log("Uang yang diberikan harus berupa angka. Coba lagi.");
         } else if (uangDikasih <= 0) {
             console.log("Uang yang diberikan harus lebih dari 0. Coba lagi.");
